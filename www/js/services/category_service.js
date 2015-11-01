@@ -13,6 +13,11 @@ app.service('CategoryService', function($resource, BASE_URL) {
     return Category.query();
   };
 
+  // Get one category
+  this.get = function(id, callback) {
+    return Category.get({id: id}, callback);
+  }
+
   // Save a new or already existing category
   this.save = function(category, callback) {
     if (category.id) {
