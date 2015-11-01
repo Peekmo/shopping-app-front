@@ -1,5 +1,6 @@
-var app = angular.module('shopping', ['ionic', 'ngResource'])
+var app = angular.module('shopping', ['ionic', 'ionic.utils', 'ngResource'])
 .constant('BASE_URL', 'http://localhost:3000')
+.constant('LOCALE_ONLY', true)
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
