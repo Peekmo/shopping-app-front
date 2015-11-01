@@ -18,9 +18,9 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
     } else {
       var categories = $localstorage.getObject('categories');
 
-      if (categories === {}) {
+      if (typeof categories === 'object') {
         categories = [];
-        $localstorage.set('categories', []);
+        $localstorage.setObject('categories', []);
       }
     }
 
