@@ -1,6 +1,6 @@
 {
   "name": "shopping",
-  "app_id": "",
+  "app_id": "e56306dd",
   "gulpStartupTasks": [
     "sass",
     "watch"
