@@ -11,7 +11,8 @@ app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
 
     $ionicModal.fromTemplateUrl('templates/partials/modals/new-category.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-up',
+      focusFirstInput: true
     }).then(function(modal) {
       $scope.modal_new = modal;
       $scope.modal_new.show();
