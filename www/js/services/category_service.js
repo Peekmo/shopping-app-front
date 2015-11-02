@@ -5,6 +5,8 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
     'delete': {method: 'DELETE', params: {id: "@id"}},
   });
 
+  this.sync = false;
+
   // Return new category
   this.new = function() {
     return new Category;
@@ -12,29 +14,28 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
 
   // Get all categories
   this.all = function() {
-    if ($connection.has()) {
+    if ($connection.has() && !this.sync) {
+      this.sync();
+    } else if ($connection.has()) {
       var categories = Category.query(function(categories) {
         $localstorage.setArray(storage_key, categories);
       });
     } else {
-      var categories = $localstorage.getArray('categories');
+      this.sync = false;
     }
 
+    var categories = $localstorage.getArray('categories');
     return categories;
   };
 
   // Get one category
   this.get = function(id, callback) {
-    if ($connection.has()) {
-      return Category.get({id: id}, callback);
-    } else {
-      var categories = this.all();
-      for (var i=0; i<categories.length; i++) {
-        if (categories[i].id == id) {
-          callback && callback();
+    var categories = this.all();
+    for (var i=0; i<categories.length; i++) {
+      if (categories[i].id == id) {
+        callback && callback();
 
-          return categories[i];
-        }
+        return categories[i];
       }
     }
   }
@@ -48,6 +49,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
         category.$save(callback);
       }
     } else {
+      this.sync = false;
       var categories = this.all();
 
       if (category.id) {
@@ -73,6 +75,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
         category.$delete(callback);
       }
     } else {
+      this.sync = false;
       var categories = this.all();
 
       for (var i=0; i<categories.length; i++) {
@@ -85,5 +88,44 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
       $localstorage.setArray(storage_key, categories);
       callback && callback();
     }
+  }
+
+  // Sync local storage and server
+  this.sync = function() {
+    if (!$connection.has()) {
+      return;
+    }
+
+    var categories = Category.query(function(categories) {
+      var olds = $localstorage.getArray(storage_key, categories);
+
+      // Adds new ones
+      for (var i=0; i<olds.length; i++) {
+        if (olds[i].id.startsWith("temp::")) {
+          olds[i].id = null;
+        }
+
+        this.save(olds[i]);
+      }
+
+      // Remove old ones
+      for (var i=0; i<categories.length; i++) {
+        var found = false;
+
+        for (var j=0; j<olds.length; j++) {
+          if (categories[i].id == olds[j].id) {
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          this.delete(categories[i]);
+        }
+      }
+
+      $localstorage.setArray(storage_key, categories);
+      this.sync = true;
+    });
   }
 });
