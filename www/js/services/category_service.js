@@ -1,7 +1,8 @@
 app.service('CategoryService', function($resource, $localstorage, $connection, BASE_URL) {
   var storage_key = 'categories';
   var Category = $resource(BASE_URL + '/categories/:id.json', null, {
-    'update': {method: 'PUT', params: {id: "@id"}}
+    'update': {method: 'PUT', params: {id: "@id"}},
+    'delete': {method: 'DELETE', params: {id: "@id"}},
   });
 
   // Return new category
