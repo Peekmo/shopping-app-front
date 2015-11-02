@@ -13,6 +13,12 @@ angular.module('ionic.utils', [])
     },
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
+    },
+    setArray: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getArray: function(key) {
+      return JSON.parse($window.localStorage[key] || '[]');
     }
   }
 }]);

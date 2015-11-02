@@ -13,15 +13,10 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
   this.all = function() {
     if ($connection.has()) {
       var categories = Category.query(function(categories) {
-        $localstorage.setObject(storage_key, categories);
+        $localstorage.setArray(storage_key, categories);
       });
     } else {
-      var categories = $localstorage.getObject('categories');
-
-      if (typeof categories === 'object') {
-        categories = [];
-        $localstorage.setObject('categories', []);
-      }
+      var categories = $localstorage.getArray('categories');
     }
 
     return categories;
@@ -65,7 +60,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
         categories.push(category);
       }
 
-      $localstorage.setObject(storage_key, categories);
+      $localstorage.setArray(storage_key, categories);
       callback && callback();
     }
   }
