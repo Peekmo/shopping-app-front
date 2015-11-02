@@ -39,7 +39,7 @@ app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
     );
   };
 
-  $scope.$on('modal.hidden', function() {
+  $scope.save = function() {
     // Edit modal deletion
     if ($scope.current_edit !== null) {
       $scope.categories[$scope.current_index_edit].name = $scope.current_edit.name
@@ -58,5 +58,19 @@ app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
       $scope.current_new = null;
       $scope.modal_new.remove();
     }
-  });
+  };
+
+  $scope.delete = function() {
+    if ($scope.current_edit === null) {
+      return;
+    }
+
+    CategoryService.delete($scope.current_edit, function() {
+      $scope.categories = CategoryService.all();
+    });
+
+    $scope.current_edit = null;
+    $scope.current_index_edit = null;
+    $scope.modal_edit.remove();
+  }
 });

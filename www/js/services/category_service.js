@@ -63,5 +63,26 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
       $localstorage.setArray(storage_key, categories);
       callback && callback();
     }
+  };
+
+  // Suppression
+  this.delete = function(category, callback) {
+    if ($connection.has()) {
+      if (category.id) {
+        category.$delete(callback);
+      }
+    } else {
+      var categories = this.all();
+
+      for (var i=0; i<categories.length; i++) {
+        if (categories[i].id == category.id) {
+          categories.splice(i, 1);
+          break;
+        }
+      }
+
+      $localstorage.setArray(storage_key, categories);
+      callback && callback();
+    }
   }
 });
