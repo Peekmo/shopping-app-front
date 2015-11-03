@@ -16,16 +16,24 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
   this.all = function(callback) {
     if ($connection.has() && !this.sync) {
       this.sync();
+
+      var categories = $localstorage.getArray('categories');
+      callback && callback(categories);
+      
+      categories = $localstorage.getArray('categories');
     } else if ($connection.has()) {
       var categories = Category.query(function(categories) {
         $localstorage.setArray(storage_key, categories);
         callback(categories);
+
+        categories = $localstorage.getArray('categories');
       });
     } else {
       this.sync = false;
 
       var categories = $localstorage.getArray('categories');
       callback && callback(categories);
+      categories = $localstorage.getArray('categories');
     }
 
     return categories;
