@@ -13,18 +13,21 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
   };
 
   // Get all categories
-  this.all = function() {
+  this.all = function(callback) {
     if ($connection.has() && !this.sync) {
       this.sync();
     } else if ($connection.has()) {
       var categories = Category.query(function(categories) {
         $localstorage.setArray(storage_key, categories);
+        callback(categories);
       });
     } else {
       this.sync = false;
+
+      var categories = $localstorage.getArray('categories');
+      callback && callback(categories);
     }
 
-    var categories = $localstorage.getArray('categories');
     return categories;
   };
 
@@ -33,7 +36,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
     var categories = this.all();
     for (var i=0; i<categories.length; i++) {
       if (categories[i].id == id) {
-        callback && callback();
+        callback && callback(categories[i]);
 
         return categories[i];
       }

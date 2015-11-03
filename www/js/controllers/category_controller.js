@@ -1,7 +1,17 @@
 app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
 
   // Get categories
-  $scope.categories = CategoryService.all();
+  $scope.categories = CategoryService.all(function(categories) {
+    if (categories.length == 0) {
+      var category = CategoryService.new();
+      category.type = 'system';
+      category.name = 'Aucune';
+
+      CategoryService.save(category, function() {
+        $scope.categories = CategoryService.all();
+      });
+    }
+  });
   $scope.current_edit = null;
   $scope.current_new = null;
 
@@ -29,6 +39,11 @@ app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
     $scope.current_edit = CategoryService.get(
       $scope.categories[index].id,
       function(category) {
+        // Can't edit system categories
+        if (category.type == "system") {
+          return;
+        }
+
         $ionicModal.fromTemplateUrl('templates/partials/modals/edit-category.html', {
           scope: $scope,
           animation: 'slide-in-up'
@@ -63,6 +78,11 @@ app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
 
   $scope.delete = function() {
     if ($scope.current_edit === null) {
+      return;
+    }
+
+    // Can't edit system categories
+    if ($scope.current_edit.type == "system") {
       return;
     }
 
