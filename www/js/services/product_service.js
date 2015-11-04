@@ -16,7 +16,7 @@ app.service('ProductService', function($resource, $localstorage, $connection, BA
   };
 
   // Get all products
-  this.all = function(callback) {
+  this.all = function(category_id, callback) {
     if ($connection.has() && !this.sync) {
       this.sync();
 
@@ -39,7 +39,18 @@ app.service('ProductService', function($resource, $localstorage, $connection, BA
       products = $localstorage.getArray('products');
     }
 
-    return products;
+    if (category_id !== null && category_id !== undefined) {
+      var finalProducts = [];
+      products.forEach(function(element) {
+        if (element.category.id === category_id) {
+          finalProducts.push(element);
+        }
+      });
+    } else {
+      finalProducts = products;
+    }
+
+    return finalProducts;
   };
 
   // Get one product

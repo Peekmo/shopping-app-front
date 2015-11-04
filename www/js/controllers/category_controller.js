@@ -35,6 +35,8 @@ app.controller('CategoryCtrl', function($scope, $ionicModal, CategoryService) {
 
   // Edit categories, print a modal
   $scope.edit = function(index) {
+    return; // @todo Temp
+
     $scope.current_index_edit = index;
     $scope.current_edit = CategoryService.get(
       $scope.categories[index].id,
