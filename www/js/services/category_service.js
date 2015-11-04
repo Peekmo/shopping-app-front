@@ -19,7 +19,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
 
       var categories = $localstorage.getArray('categories');
       callback && callback(categories);
-      
+
       categories = $localstorage.getArray('categories');
     } else if ($connection.has()) {
       var categories = Category.query(function(categories) {
@@ -49,7 +49,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
         return categories[i];
       }
     }
-  }
+  };
 
   // Save a new or already existing category
   this.save = function(category, callback) {
@@ -99,7 +99,7 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
       $localstorage.setArray(storage_key, categories);
       callback && callback();
     }
-  }
+  };
 
   // Sync local storage and server
   this.sync = function() {
@@ -138,5 +138,5 @@ app.service('CategoryService', function($resource, $localstorage, $connection, B
       $localstorage.setArray(storage_key, categories);
       this.sync = true;
     });
-  }
+  };
 });

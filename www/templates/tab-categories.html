@@ -1,6 +1,6 @@
 <ion-view view-title="Categories" class="background">
   <ion-content class="padding">
-    <div class="card red col" ng-class="category.type == 'system' ? 'orange darken-3' : 'darken-3'" ng-repeat="category in categories track by $index" ng-click="edit($index)">
+    <div class="card red col" ng-class="category.type == 'system' ? 'orange darken-3' : 'darken-3'" ng-repeat="category in categories track by $index" ng-click="edit($index)" ui-sref="tab.products({'category_id': category.id})">
       <div class="card-content white-text">
         <span class="card-title">{{ category.name }}</span>
       </div>

@@ -9085,7 +9085,11 @@ a.button {
 ion-view.background {
   background-color: #ffcc80; }
 
-.edit-category, .new-category {
+.edit-category, .new-category, .new-product {
   width: 90%;
   top: 20px;
   min-height: 250px; }
+
+ion-item.red-list {
+  color: #fff;
+  border: 1px solid #7a0707; }

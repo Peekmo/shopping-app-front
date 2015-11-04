@@ -33,6 +33,15 @@ var app = angular.module('shopping', ['ionic', 'ionic.utils', 'ngResource'])
       }
     }
   })
+  .state('tab.products', {
+    url: '/categories/:category_id/products',
+    views: {
+      'menu': {
+        templateUrl: 'templates/products.html',
+        controller: 'ProductCtrl'
+      }
+    }
+  })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/categories');
