@@ -2,10 +2,14 @@ ion-view.background {
     background-color: #ffcc80;
 }
 
-.edit-category, .new-category, .new-product, .edit-product {
+.edit-category, .new-category, .new-product, .edit-product, .new-shop, .edit-shop {
     width: 90%;
     top: 20px;
     min-height: 250px;
+}
+
+.new-shop, .edit-shop {
+    min-height: 380px;
 }
 
 ion-item.red-list {

@@ -1,0 +1,9 @@
+<ion-view view-title="Magasins" class="background">
+  <ion-content class="padding">
+    <div class="card red col" ng-repeat="shop in shops track by $index" ng-click="edit($index)">
+      <div class="card-content white-text">
+        <span class="card-title">{{ shop.name }}</span>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

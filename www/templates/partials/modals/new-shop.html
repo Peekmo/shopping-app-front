@@ -1,0 +1,24 @@
+<ion-modal-view class="new-shop">
+  <ion-header-bar>
+    <h1 class="title">Nouveau magasin</h1>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="item-input-inset">
+     <label class="item-input-wrapper">
+       <input type="text" placeholder="Nom" ng-model="current_new.name">
+     </label>
+   </div>
+   <div class="item-input-inset">
+     <label class="item-input-wrapper">
+       <input type="text" placeholder="Adresse" ng-model="current_new.address">
+     </label>
+   </div>
+   <div class="item-input-inset">
+     <label class="item-input-wrapper">
+       <input type="text" placeholder="Schedules" ng-model="current_new.schedules">
+     </label>
+    </div>
+    <button class="button button-block button-calm" ng-click="save()">Enregistrer</button>
+    <button class="button button-block button-dark" ng-click="modal_new.remove()">Annuler</button>
+  </ion-content>
+</ion-modal-view>
