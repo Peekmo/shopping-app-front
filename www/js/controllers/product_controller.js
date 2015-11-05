@@ -64,7 +64,7 @@ app.controller('ProductCtrl', function($scope, $ionicModal, $stateParams, Catego
     // New modal deletion
     } else if ($scope.current_new !== null && $scope.current_new.name) {
       ProductService.save($scope.current_new, function() {
-        $scope.products = getAll();
+        getAll();
       });
 
       $scope.current_new = null;
@@ -83,7 +83,7 @@ app.controller('ProductCtrl', function($scope, $ionicModal, $stateParams, Catego
     }
 
     ProductService.delete($scope.current_edit, function() {
-      $scope.products = getAll();
+      getAll();
     });
 
     $scope.current_edit = null;
